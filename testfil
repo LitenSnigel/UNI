@@ -47,4 +47,5 @@ public class Uppgift1 {
         }
 
         }
+        system.out.println("Hej");
     }
