@@ -1,0 +1,50 @@
+package Labb3;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+
+public class Uppgift1 {
+
+    public static void main(String[] args) {
+        System.out.println("Påminnelse: Loading class com.mysql.jdbc.Driver. This is deprecated. The new driver class is `com.mysql.cj.jdbc.Driver'. The driver is automatically registered via the SPI and manual loading of the driver class is generally unnecessary.\n");
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            System.out.println("Driver loaded");
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Driver did not load");
+        }
+
+        ArrayList<String> lista = new ArrayList<>();
+        try (
+            Connection connect = DriverManager.getConnection(
+                    "jdbc:mysql://localhost/superheroes?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
+                    ,
+"root", "Jim1337!")) {
+            System.out.println("Connected");
+
+            Statement statement = connect.createStatement();
+
+            ResultSet result = statement.executeQuery("SELECT * FROM superfigur");
+
+            while (result.next()) {
+                lista.add(result.getString(1));
+            }
+
+           /* while(result.next()) {
+                System.out.println(result.getString(1));
+            } */
+
+        } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+
+        }
+        System.out.println("Hej \n");
+
+        for (String a : lista) {
+            System.out.println(a);
+        }
+
+        }
+    }
