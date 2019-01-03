@@ -1,15 +1,10 @@
 package Labb4;
 
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.sql.*;
+import java.util.ArrayList;
 
 public class Superfigur extends Application {
 
@@ -19,34 +14,34 @@ public class Superfigur extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        BorderPane bp = new BorderPane();
-        ToolBar toolBar = new ToolBar();
-        Button knapp = new Button("Se medlemmar");
-        Button knapp2 = new Button("Lägg till medlem");
-        Button knapp3 = new Button("Sök");
 
-        toolBar.getItems().addAll(knapp, knapp2, knapp3);
+        //Array av namnen
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            System.out.println("Driver loaded");
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Driver did not load");
+        }
+        try(Connection conn = DriverManager.getConnection(
+                "jdbc:mysql://localhost/Superheroes?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
+                "root", "xxx")) {
+            System.out.println("Connected");
 
-        ObservableList<String> observableList = FXCollections.observableArrayList("Superman", "Iron Man", "Spider Man");
-        ListView<String> listView = new ListView<>(observableList);
+            Statement statement = conn.createStatement();
 
-        VBox vbox = new VBox();
-        VBox vbox2 = new VBox();
+            ResultSet rs = statement.executeQuery("SELECT Fnamn from superfigur");
 
-        Text filter = new Text("Filter");
-        vbox2.getChildren().addAll(filter);
+            ArrayList<String> superfigurerNamn = new ArrayList<>();
 
-        Text info = new Text("Information");
-        vbox.getChildren().addAll(info);
+            while(rs.next()) {
+                superfigurerNamn.add(rs.getString(1));
+            }
 
-        bp.setCenter(listView);
-        bp.setTop(toolBar);
-        bp.setLeft(vbox);
-        bp.setRight(vbox2);
-
-        Scene scene = new Scene(bp);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
+            for (String s : superfigurerNamn){
+                System.out.println(s);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Something went wrong..." + ex.getMessage());
+        }
     }
 }
