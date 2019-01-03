@@ -1,0 +1,64 @@
+package Projekt;
+
+import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.ToolBar;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+public class Number1 extends Application {
+
+    Stage window;
+    Scene scene1, scene2, scene3;
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage primaryStage) {
+
+        window = primaryStage;
+
+        //Mainpage
+        VBox layout = new VBox();
+        ToolBar toolBar = new ToolBar();
+        Button knapp = new Button("Se medlemmar");
+        knapp.setPrefSize(150,35);
+        Button knapp2 = new Button("Lägg till medlem");
+        knapp2.setPrefSize(150,35);
+        Button knapp3 = new Button("Sök");
+        knapp3.setPrefSize(150,35);
+
+        toolBar.getItems().addAll(knapp, knapp2, knapp3);
+        layout.getChildren().addAll(toolBar);
+
+        
+
+        Scene scene1 = new Scene(layout, 500,500);
+        //Se medlemmar
+        knapp.setOnAction(event -> window.setScene(scene2));
+
+        BorderPane bp = new BorderPane();
+        ListView medlemmar = new ListView();
+
+
+
+        bp.getChildren().addAll(medlemmar);
+        Scene scene2 = new Scene(bp, 500, 500);
+
+
+
+        window.setScene(scene1);
+        window.setTitle("Program");
+        window.show();
+
+    }
+}
