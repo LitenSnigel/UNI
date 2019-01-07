@@ -1,47 +1,117 @@
-package Labb4;
+package Labb3;
 
-import javafx.application.Application;
-import javafx.stage.Stage;
-
-import java.sql.*;
 import java.util.ArrayList;
 
-public class Superfigur extends Application {
+public class Superfigur {
+    private String alias = "N/A";
+    private String fnamn = "N/A";
+    private String enamn = "N/A";
+    private String inriktning = "N/A";
+    private String beskrivning = "N/A";
+    private String nuvarandeOrg = "N/A";
+    private String universum = "N/A";
+    private ArrayList<String> tidigareOrg = new ArrayList<>();
+    private ArrayList<String> skapareArr = new ArrayList<>();
 
-    public static void main(String[] args) {
-        launch(args);
+    public Superfigur(){
     }
 
-    @Override
-    public void start(Stage primaryStage) {
+    public Superfigur(String alias, String fnamn, String enamn, String inriktning, String beskrivning, String nuvarandeOrg, ArrayList<String> tidigareOrg, ArrayList<String> skapareArr) {
+        this.alias = alias;
+        this.fnamn = fnamn;
+        this.inriktning = inriktning;
+        this.beskrivning = beskrivning;
+        this.nuvarandeOrg = nuvarandeOrg;
+        this.tidigareOrg = tidigareOrg;
+        this.skapareArr = skapareArr;
+    }
 
-        //Array av namnen
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            System.out.println("Driver loaded");
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Driver did not load");
-        }
-        try(Connection conn = DriverManager.getConnection(
-                "jdbc:mysql://localhost/Superheroes?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
-                "root", "xxx")) {
-            System.out.println("Connected");
+    public Superfigur(String alias, String fnamn, String enamn, String inriktning, String beskrivning, String universum) {
+        this.alias = alias;
+        this.fnamn = fnamn;
+        this.enamn = enamn;
+        this.inriktning = inriktning;
+        this.beskrivning = beskrivning;
+        this.universum = universum;
+    }
 
-            Statement statement = conn.createStatement();
+    public String getAlias() {
+        return alias;
+    }
 
-            ResultSet rs = statement.executeQuery("SELECT Fnamn from superfigur");
+    public void setAlias(String alias) {
+        this.alias = alias;
+    }
 
-            ArrayList<String> superfigurerNamn = new ArrayList<>();
+    public String getFnamn() {
+        return fnamn;
+    }
 
-            while(rs.next()) {
-                superfigurerNamn.add(rs.getString(1));
-            }
+    public void setFnamn(String namn) {
+        this.fnamn = namn;
+    }
 
-            for (String s : superfigurerNamn){
-                System.out.println(s);
-            }
-        } catch (SQLException ex) {
-            System.out.println("Something went wrong..." + ex.getMessage());
-        }
+    public String getEnamn() {
+        return enamn;
+    }
+
+    public void setEnamn(String enamn) {
+        this.enamn = enamn;
+    }
+
+    public String getInriktning() {
+        return inriktning;
+    }
+
+    public void setInriktning(String inriktning) {
+        this.inriktning = inriktning;
+    }
+
+    public String getBeskrivning() {
+        return beskrivning;
+    }
+
+    public void setBeskrivning(String beskrivning) {
+        this.beskrivning = beskrivning;
+    }
+
+    public String getNuvarandeOrg() {
+        return nuvarandeOrg;
+    }
+
+    public void setNuvarandeOrg(String nuvarandeOrg) {
+        this.nuvarandeOrg = nuvarandeOrg;
+    }
+
+    public String getUniversum() {
+        return universum;
+    }
+
+    public void setUniversum(String universum) {
+        this.universum = universum;
+    }
+
+    public ArrayList<String> getTidigareOrg() {
+        return tidigareOrg;
+    }
+
+    public void setTidigareOrg(ArrayList<String> tidigareOrg) {
+        this.tidigareOrg = tidigareOrg;
+    }
+
+    public void addTidigareOrg(String tidigareOrg){
+        this.tidigareOrg.add(tidigareOrg);
+    }
+
+    public ArrayList<String> getSkapareArr() {
+        return skapareArr;
+    }
+
+    public void setSkapareArr(ArrayList<String> skapareArr) {
+        this.skapareArr = skapareArr;
+    }
+
+    public void addSkapare(String skapare){
+        this.skapareArr.add(skapare);
     }
 }
